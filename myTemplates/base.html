@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='myStyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sign_In_Up.css') }}">
+
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body> <!-- background="{{ url_for('static', filename='bg_webapp.png') }}" works but not good! reformatting etc. -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light ">
+        <a class="btn btn-lg btn-primary" role="button" href="{{ url_for('index')}}">Home</a>
+        <div class="contact"><a class="navbar-brand btn-lg btn-secondary" href="{{ url_for('contact')}}">Contact</a></div>
+        <div class="about"><a class="navbar-brand btn-lg btn-secondary" href="{{ url_for('about')}}">About</a></div>
+        <div class="toprightsi"><a class="navbar-light" href="{{ url_for('sign_in')}}">Sign In</a></div>
+        <div class="toprightsu"><a class="navbar-light" href="{{ url_for('sign_up')}}">Sign Up</a></div>
+        <!-- <a class="navbar-brand" href="{{ url_for('error')}}">ERROR 404</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>-->
+    </nav>
+    
+    <div class="container">
+        {% block content %} {% endblock %}
+    </div>
+    <br>
+    <br>
+    <footer class="footer">
+        <div class="colored-img">
+            <a href="https://www.integrationworks.de/", target="_blank"><p><img src="{{ url_for('static', filename='pictures/IntegrationWorks_transparency_layer.png') }}"></p></a>
+        </div>
+        <p>&copy; IntegrationWorks GmbH</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="myStatic/js/node_modules/jquery/dist/jquery.min.map"></script>
+    <script src="myStatic/js/node_modules/jquery/dist/jquery.js"></script>
+    <script src="myStatic/js/jQuery.js"></script>
+</body>
+</html>
