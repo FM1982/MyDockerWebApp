@@ -17,6 +17,8 @@ function printStatusSuccess(){
 	echo " >> Host		: ${DB_HOST}"
 	echo " >> Database		: ${DB_NAME}"
 	echo " >> User		: ${DB_USER}"
+	echo " >> Password		: ${DB_PASS}"
+	echo " >> Table		: ${DB_TABLE}"
 
 	echo "Done by Mario Luensmann"
 }
@@ -31,32 +33,39 @@ function parseArgs(){
 				DB_NAME="${arg#*=}";;
 			-u=*|--user=*)
 				DB_USER="${arg#*=}";;
-			esac
-		done
-		[[ -z $DB_NAME ]] && echo "Database name can not be empty." && exit 1
-		[[ $DB_USER ]] || DB_USER=$DB_NAME
+			-t=*|--table=*)
+				DB_TABLE="${arg#*=}";;
+			-p=*|--pass=*)
+				DB_PASS="${arg#*=}";;
+		esac
+	done
+	[[ -z $DB_NAME ]] && echo "Database name can not be empty." && exit 1
+	[[ -z $DB_TABLE ]] && echo "Tablename can not be empty." && exit 1
+	[[ -z $DB_PASS ]] && echo "Userpassword can not be empty." && exit 1
+	[[ $DB_USER ]] || DB_USER=$DB_NAME
+	[[ $DB_HOST ]] || DB_HOST='localhost'
 }
 
 function createAMySqlDb() {
 	SQLCommand1="DROP DATABASE IF EXISTS ${DB_NAME};"
 	SQLCommand2="CREATE DATABASE IF NOT EXISTS ${DB_NAME};"
 	SQLCommand3="USE ${DB_NAME};"
-	SQLCommand4="DROP USER IF EXISTS '${DB_USER}'@'localhost';"
-	SQLCommand5="CREATE USER '${DB_USER}'@'localhost' IDENTIFIED BY 'LLCTR001';"
-	SQLCommand6="GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'localhost';"
+	SQLCommand4="DROP USER IF EXISTS '${DB_USER}'@'%';"
+	SQLCommand5="CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASS}';"
+	SQLCommand6="GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%';"
 	SQLCommand7="FLUSH PRIVILEGES;"
 
 	if [ -f /root/.my.cnf ]; then
 		$BIN_MYSQL -e "${SQLCommand1}${SQLCommand2}${SQLCommand3}${SQLCommand4}${SQLCommand5}${SQLCommand6}${SQLCommand7}"
 	else
-		input "Enter database name, please!"
-		read rootPassword
-		$BIN_MYSQL -h $DB_HOST -u root -p ${rootPassword} -e "${SQLCommand1}${SQLCommand2}${SQLCommand3}${SQLCommand4}${SQLCommand5}${SQLCommand6}${SQLCommand7}"
+		input "Enter MySQL root user password, please!"
+		#read rootPassword
+		$BIN_MYSQL -h $DB_HOST -u root -p -e "${SQLCommand1}${SQLCommand2}${SQLCommand3}${SQLCommand4}${SQLCommand5}${SQLCommand6}${SQLCommand7}"
 	fi
 }
 
 function createLoginTable(){
-	SQLCommand1="CREATE TABLE ${DB_NAME}.credentials (
+	SQLCommand1="CREATE TABLE ${DB_NAME}.${DB_TABLE} (
 	myuser_id BIGINT NOT NULL AUTO_INCREMENT,
 	myuser_name VARCHAR(30) NOT NULL,
 	myuser_username VARCHAR(30) NOT NULL,
@@ -67,9 +76,9 @@ function createLoginTable(){
 	if [ -f /root/.my.cnf ]; then
 		$BIN_MYSQL -e "${SQLCommand1}"
 	else
-		input "Enter database name, please!"
-		read rootPassword
-		$BIN_MYSQL -h $DB_HOST -u root -p ${rootPassword} -e "${SQLCommand1}"
+		input "Enter MySQL root user password, please!"
+		#read rootPassword
+		$BIN_MYSQL -h $DB_HOST -u root -p -e "${SQLCommand1}"
 	fi
 }
 
@@ -80,9 +89,11 @@ VERSION="0.0.1"
 
 BIN_MYSQL=$(which mysql)
 
-DB_HOST='localhost'
+DB_HOST=
 DB_NAME=
 DB_USER=
+DB_PASS=
+DB_TABLE=
 
 function main(){
 
@@ -90,7 +101,7 @@ function main(){
 	parseArgs "$@"
 	sucop "Done!"
 
-	sucop "Creating MySQL db ..."
+	sucop "Creating MySQL db and user ..."
 	createAMySqlDb
 	sucop "Done!"
 
