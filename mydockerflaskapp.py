@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, json
+from flask import Flask, render_template, request, json, session, redirect
 from flaskext.mysql import MySQL
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 myDockerWebAppFlask: Flask = Flask(__name__, template_folder='myTemplates', static_folder='myStatic')
+
+myDockerWebAppFlask.secret_key = 'Say hello to my little friend!'
 
 mysql = MySQL()
 
@@ -18,7 +20,10 @@ myCursor = myConnection.cursor()
 
 @myDockerWebAppFlask.route('/index.html')
 def index():
-    return render_template('index.html')  # 'Hello World! It Works!'
+    if session.get('user'):
+        return render_template('index.html')  # 'Hello World! It Works!'
+    else:
+        return render_template('error.html', error='Unauthorized User Access')
 
 
 @myDockerWebAppFlask.route('/contact.html')
@@ -34,6 +39,33 @@ def about():
 @myDockerWebAppFlask.route('/sign_in.html')
 def sign_in():
     return render_template('sign_in.html')
+
+
+@myDockerWebAppFlask.route('/ValidateUserLogin', methods=['POST'])
+def validate_user_login():
+    try:
+        my_email = request.form['inputEmail']
+        my_password = request.form['inputPassword']
+
+        vul_connection = mysql.connect()
+        my_cursor = vul_connection.cursor()
+        my_cursor.callproc('ValidateUserLogin', (my_email,))
+        my_data = my_cursor.fetchall()
+
+        if len(my_data) > 0:
+            if check_password_hash(str(my_data[0][3]), my_password):
+                session['user'] = my_data[0][0]
+                return redirect('/index.html')
+            else:
+                return render_template('error.html', error='Wrong password or email')
+        else:
+            return render_template('error.html', error='Wrong password or email')
+
+    except Exception as ex:
+        return render_template('error.html', error=str(ex))
+    finally:
+        myCursor.close()
+        vul_connection.close()
 
 
 @myDockerWebAppFlask.route('/sign_up.html')

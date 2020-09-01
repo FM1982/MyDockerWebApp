@@ -2,8 +2,27 @@
 
 {% block content %}
     <h2>{% block title %} Error 404. Resource Not Found {% endblock %}</h2>
+    <!--<br>
     <br>
     <br>
-    <br>
-    <h1>Ups, something happened here that was not supposed to happen!</h1>
+    <h1>Ups, something happened here that was not supposed to happen!</h1> -->
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="index.html">Home</a>
+                    </li>
+                    <li role="presentation"><a href="/sign_in.html">Sign In</a>
+                    </li>
+                    <li role="presentation"><a href="/sign_up.html">Sign Up</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Python Flask App</h3>
+        </div>
+
+        <div class="jumbotron">
+            <h1>{{error}}</h1>
+        </div>
+    </div>
 {% endblock %}
