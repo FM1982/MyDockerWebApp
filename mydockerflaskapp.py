@@ -7,7 +7,7 @@ myDockerWebAppFlask: Flask = Flask(__name__, template_folder='myTemplates', stat
 mysql = MySQL()
 
 myDockerWebAppFlask.config['MYSQL_DATABASE_USER'] = 'FoxMulder'
-myDockerWebAppFlask.config['MYSQL_DATABASE_PASSWORD'] = 'LLCTR001'
+myDockerWebAppFlask.config['MYSQL_DATABASE_PASSWORD'] = 'llctrMP001'
 myDockerWebAppFlask.config['MYSQL_DATABASE_DB'] = 'LoginWebApp'
 myDockerWebAppFlask.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(myDockerWebAppFlask)
