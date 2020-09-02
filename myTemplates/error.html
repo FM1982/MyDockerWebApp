@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>{% block title %} Error 404. Resource Not Found {% endblock %}</h2>
+    <h2>{% block title %} {{error}} {% endblock %}</h2> <!-- Error 404. Resource Not Found -->
     <!--<br>
     <br>
     <br>
@@ -21,8 +21,8 @@
             <h3 class="text-muted">Python Flask App</h3>
         </div>
 
-        <div class="jumbotron">
-            <h1>{{error}}</h1>
+        <div class="container">
+            <h1 style="font-size:5em">{{error}}</h1>
         </div>
     </div>
 {% endblock %}
