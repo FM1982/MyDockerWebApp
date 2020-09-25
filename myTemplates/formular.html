@@ -7,82 +7,91 @@
                 <fieldset>
                     <!-- Form Name -->
                     <h2>Use now the fields below to input all informations needed for registering within this docker-based app!</h2>
+                    <div class="container border">
+                        <div class="row">
+                        <!-- Text input-->
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Name">Name</label>
+                                <div class="col-md-10">
+                                    <input id="name" name="inputName" type="text" placeholder="e.g. Foo" class="form-control">
+                                </div>
+                            </div>
 
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label my-label" for="Name">Name</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="text" placeholder="e.g. Foo" class="form-control input-md">
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Surname">Surname</label>
+                                <div class="col-md-10">
+                                    <input id="surname" name="inputSurname" type="text" placeholder="e.g. Bar" class="form-control input-md">
+                                    <!-- <textarea class="form-control" id="txtPost" name="inputDescription"></textarea> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Age">Age</label>
+                                <div class="col-md-10">
+                                    <input id="age" name="inputAge" type="number" placeholder="e.g. 25" class="form-control input-md">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="email">E-mail</label>
+                                <div class="col-md-10">
+                                    <input id="email" name="inputEMail" type="email" placeholder="e.g. fm@bla.com" class="form-control input-md">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Street">Street</label>
+                                <div class="col-md-10">
+                                    <input id="street" name="inputStreet" type="text" placeholder="e.g. John Doe Street" class="form-control input-md">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Houseno">House no.</label>
+                                <div class="col-md-10">
+                                    <input id="houseno" name="inputHouseNo" type="number" placeholder="e.g. 5567" class="form-control input-md">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row flex-row">
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="PostalCode">Postal Code</label>
+                                <div class="col-md-10">
+                                    <input id="postalcode" name="inputPostalCode" type="number" placeholder="e.g. 13627" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="control-label" for="phonenumber">Phone-number</label>
+                                <div class="col-md-10">
+                                    <input id="phonenumber" name="inputPhoneNumber" type="tel" placeholder="e.g. +49171123456" class="form-control input-md">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- <div class="form-group">
+                            <div class="col-md-4">
+                                <label class="col-md-4 control-label" for="Street">Street</label>
+                                <input id="txtTitle" name="inputTitle" type="text" placeholder="placeholder" class="form-control input-md">
+                                <textarea class="form-control" id="txtPost" name="inputDescription"></textarea>
+                            </div>
+                        </div> -->
+
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="singlebutton"></label>
+                            <div class="col-md-4">
+                                <input id="singlebutton" name="singleButton" class="btn btn-danger" type="submit" style="color: white" value="Save" />
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Textarea -->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="Surname">Surname</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="text" placeholder="e.g. Bar" class="form-control input-md">
-                            <!-- <textarea class="form-control" id="txtPost" name="inputDescription"></textarea> -->
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="Age">Age</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="number" placeholder="e.g. 25" class="form-control input-md">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="Street">Street</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="text" placeholder="e.g. John Doe Street" class="form-control input-md">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="Houseno">House no.</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="number" placeholder="e.g. 5567" class="form-control input-md">
-                        </div>
-                    </div>
-
-                    <!-- <div class="form-group">
-                        <div class="col-md-4">
-                            <label class="col-md-4 control-label" for="Street">Street</label>
-                            <input id="txtTitle" name="inputTitle" type="text" placeholder="placeholder" class="form-control input-md">
-                            <textarea class="form-control" id="txtPost" name="inputDescription"></textarea>
-                        </div>
-                    </div> -->
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="PostalCode">Postal Code</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="number" placeholder="e.g. 13627" class="form-control input-md">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">E-mail</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="email" placeholder="e.g. fm@bla.com" class="form-control input-md">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="phonenumber">Phone-number</label>
-                        <div class="col-md-4">
-                            <input id="txtTitle" name="inputTitle" type="tel" placeholder="e.g. +49171123456" class="form-control input-md">
-                        </div>
-                    </div>
-
-                    <!-- Button -->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="singlebutton"></label>
-                        <div class="col-md-4">
-                            <input id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Publish" />
-                        </div>
-                    </div>
-
                 </fieldset>
             </form>
         </section>

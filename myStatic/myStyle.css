@@ -7,6 +7,12 @@ h1{
     padding: 10px;
 }
 
+label{
+    font-size: 3cm;
+    color: red;
+    position: absolute;
+}
+
 body{
     background-image:url("pictures/bg_webapp.png");
     background-repeat: no-repeat;
@@ -64,7 +70,7 @@ h2{
   font-size: 18px;
 }
 
-/*.my-label {
+.my-label {
     font-size: 3cm;
     color: red;
-}*/
+}
