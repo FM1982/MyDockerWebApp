@@ -7,10 +7,10 @@
 
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='myStyle.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='sign_In_Up.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='myStyle.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sign_In_Up.css') }}">
 
-    <title>{% block title %} {% endblock %}</title>
+    <title>{% block title %}  {% endblock %}</title>
 </head>
 <body> <!-- background="{{ url_for('static', filename='bg_webapp.png') }}" works but not good! reformatting etc. -->
     <nav class="navbar navbar-expand-md navbar-light bg-light ">
@@ -24,7 +24,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>-->
     </nav>
-    
+
     <div class="container">
         {% block content %} {% endblock %}
     </div>
@@ -35,6 +35,7 @@
             <a href="https://www.integrationworks.de/", target="_blank"><p><img src="{{ url_for('static', filename='pictures/IntegrationWorks_transparency_layer.png') }}"></p></a>
         </div>
         <p>&copy; IntegrationWorks GmbH</p>
+        <p style="color: black">Current Date and Time: {{ current_date_time | datetimefilter }}</p>
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

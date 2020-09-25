@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Fill in the required information from below {% endblock %}</h1>
+        <section>
+            <form class="form-horizontal" method="post" action="/formular">
+                <fieldset>
+                    <!-- Form Name -->
+                    <h2>Use now the fields below to input all informations needed for registering within this docker-based app!</h2>
+
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label my-label" for="Name">Name</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="text" placeholder="e.g. Foo" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- Textarea -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Surname">Surname</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="text" placeholder="e.g. Bar" class="form-control input-md">
+                            <!-- <textarea class="form-control" id="txtPost" name="inputDescription"></textarea> -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Age">Age</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="number" placeholder="e.g. 25" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Street">Street</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="text" placeholder="e.g. John Doe Street" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Houseno">House no.</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="number" placeholder="e.g. 5567" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                        <div class="col-md-4">
+                            <label class="col-md-4 control-label" for="Street">Street</label>
+                            <input id="txtTitle" name="inputTitle" type="text" placeholder="placeholder" class="form-control input-md">
+                            <textarea class="form-control" id="txtPost" name="inputDescription"></textarea>
+                        </div>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="PostalCode">Postal Code</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="number" placeholder="e.g. 13627" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="email">E-mail</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="email" placeholder="e.g. fm@bla.com" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="phonenumber">Phone-number</label>
+                        <div class="col-md-4">
+                            <input id="txtTitle" name="inputTitle" type="tel" placeholder="e.g. +49171123456" class="form-control input-md">
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="singlebutton"></label>
+                        <div class="col-md-4">
+                            <input id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Publish" />
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </section>
+{% endblock %}

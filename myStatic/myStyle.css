@@ -34,6 +34,10 @@ h2{
     padding: 15px;
 }
 
+/*.bottom-leave-space {
+    margin-bottom: 10cm;
+}*/
+
 .contact {
     position: absolute;
     top: 12px;
@@ -59,3 +63,8 @@ h2{
   right: 96px;
   font-size: 18px;
 }
+
+/*.my-label {
+    font-size: 3cm;
+    color: red;
+}*/

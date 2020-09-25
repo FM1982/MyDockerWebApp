@@ -13,3 +13,6 @@ Do the following:
 ->-> mysql>use LoginWebApp;
 ->-> mysql>SHOW PROCEDURE STATUS WHERE db = 'LoginWebApp';
 ->7. Profit!
+
+currenttestaccount: 	username: fm@bla.com
+			password: llctr001
