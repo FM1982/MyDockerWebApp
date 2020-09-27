@@ -19,9 +19,9 @@ myDockerWebAppFlask.secret_key = 'Say hello to my little friend!'
 
 mysql = MySQL()
 
-myDockerWebAppFlask.config['MYSQL_DATABASE_USER'] = 'FoxMulder'
-myDockerWebAppFlask.config['MYSQL_DATABASE_PASSWORD'] = 'llctrMP001'
-myDockerWebAppFlask.config['MYSQL_DATABASE_DB'] = 'LoginWebApp'
+myDockerWebAppFlask.config['MYSQL_DATABASE_USER'] = 'fox'
+myDockerWebAppFlask.config['MYSQL_DATABASE_PASSWORD'] = 'LLCTR001'
+myDockerWebAppFlask.config['MYSQL_DATABASE_DB'] = 'DockerWebApp'
 myDockerWebAppFlask.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(myDockerWebAppFlask)
 
@@ -106,6 +106,12 @@ def sign_ups():
 
     # myCursor.close()
     # myConnection.close()
+
+
+@myDockerWebAppFlask.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/index.html')
 
 
 @myDockerWebAppFlask.route('/error.html')

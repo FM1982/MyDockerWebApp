@@ -18,7 +18,8 @@ function printStatusSuccess(){
 	echo " >> Database		: ${DB_NAME}"
 	echo " >> User		: ${DB_USER}"
 	echo " >> Password		: ${DB_PASS}"
-	echo " >> Table		: ${DB_TABLE}"
+	echo " >> TableLogin		: ${DB_TABLE_LOG}"
+	echo " >> TableEntries" : ${DB_TABLE_ENTRY}
 
 	echo "Done by Mario Luensmann"
 }
@@ -33,14 +34,17 @@ function parseArgs(){
 				DB_NAME="${arg#*=}";;
 			-u=*|--user=*)
 				DB_USER="${arg#*=}";;
-			-t=*|--table=*)
-				DB_TABLE="${arg#*=}";;
+			-t=*|--table_log=*)
+				DB_TABLE_LOG="${arg#*=}";;
+		  	-p=*|--table_entry=*)
+				DB_TABLE_ENTRY="${arg#*=}";;
 			-p=*|--pass=*)
 				DB_PASS="${arg#*=}";;
 		esac
 	done
 	[[ -z $DB_NAME ]] && echo "Database name can not be empty." && exit 1
-	[[ -z $DB_TABLE ]] && echo "Tablename can not be empty." && exit 1
+	[[ -z $DB_TABLE_LOG ]] && echo "Tablename for logging can not be empty." && exit 1
+	[[ -z $DB_TABLE_ENTRY ]] && echo "Tablename for entries can not be empty." && exit 1
 	[[ -z $DB_PASS ]] && echo "Userpassword can not be empty." && exit 1
 	[[ $DB_USER ]] || DB_USER=$DB_NAME
 	[[ $DB_HOST ]] || DB_HOST='localhost'
@@ -65,7 +69,7 @@ function createAMySqlDb() {
 }
 
 function createLoginTable(){
-	SQLCommand1="CREATE TABLE ${DB_NAME}.${DB_TABLE} (
+	SQLCommand1="CREATE TABLE ${DB_NAME}.${DB_TABLE_LOG} (
 	myuser_id BIGINT NOT NULL AUTO_INCREMENT,
 	myuser_name VARCHAR(30) NOT NULL,
 	myuser_username VARCHAR(30) NOT NULL,
@@ -73,6 +77,29 @@ function createLoginTable(){
 	PRIMARY KEY(myuser_id) );"
 
 	
+	if [ -f /root/.my.cnf ]; then
+		$BIN_MYSQL -e "${SQLCommand1}"
+	else
+		input "Enter MySQL root user password, please!"
+		#read rootPassword
+		$BIN_MYSQL -h $DB_HOST -u root -p -e "${SQLCommand1}"
+	fi
+}
+
+function createEntryTable() {
+	SQLCommand1="CREATE TABLE ${DB_NAME}.${DB_TABLE_ENTRY}(
+	entry_id int(11) NOT NULL AUTO_INCREMENT,
+	entry_name VARCHAR(30) DEFAULT NULL,
+	entry_surname VARCHAR(30) DEFAULT NULL,
+	entry_age int(3) DEFAULT 0,
+	entry_email VARCHAR(45) DEFAULT 'fm@bla.com',
+	entry_street VARCHAR(30) DEFAULT NULL,
+	entry_houseno VARCHAR(30) DEFAULT NULL,
+	entry_postalcode VARCHAR(10) DEFAULT NULL,
+	entry_phonenumber VARCHAR(30) DEFAULT NULL,
+	PRIMARY KEY(entry_id) );"
+
+
 	if [ -f /root/.my.cnf ]; then
 		$BIN_MYSQL -e "${SQLCommand1}"
 	else
@@ -93,7 +120,8 @@ DB_HOST=
 DB_NAME=
 DB_USER=
 DB_PASS=
-DB_TABLE=
+DB_TABLE_LOG=
+DB_TABLE_ENTRY=
 
 function main(){
 
@@ -105,8 +133,12 @@ function main(){
 	createAMySqlDb
 	sucop "Done!"
 
-	sucop "Creating MySQL db Table ..."
+	sucop "Creating MySQL db Table for logging..."
 	createLoginTable
+	sucop "Done!"
+
+	sucop "Creating MySQL db Table for entries ..."
+	createEntryTable
 	sucop "Done!"
 
 	printStatusSuccess

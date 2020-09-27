@@ -17,6 +17,7 @@
         <a class="btn btn-lg btn-primary" role="button" href="{{ url_for('index')}}">Home</a>
         <div class="contact"><a class="navbar-brand btn-lg btn-secondary" href="{{ url_for('contact')}}">Contact</a></div>
         <div class="about"><a class="navbar-brand btn-lg btn-secondary" href="{{ url_for('about')}}">About</a></div>
+        {% block header %} {% endblock %}
         <div class="toprightsi"><a class="navbar-light" href="{{ url_for('sign_in')}}">Sign In</a></div>
         <div class="toprightsu"><a class="navbar-light" href="{{ url_for('sign_up')}}">Sign Up</a></div>
         <!-- <a class="navbar-brand" href="{{ url_for('error')}}">ERROR 404</a>

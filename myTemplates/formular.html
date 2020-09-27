@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+{% block header %}
+    <div style="position: absolute; top: 14px; right: 176px; font-size: 18px"><a class="navbar-brand btn-lg btn-warning" href="index.html">Logout</a></div>
+{% endblock %}
 {% block content %}
     <h1>{% block title %} Fill in the required information from below {% endblock %}</h1>
         <section>
@@ -11,14 +14,14 @@
                         <div class="row">
                         <!-- Text input-->
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Name">Name</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-5 control-label" for="Name">Name</label>
                                 <div class="col-md-10">
                                     <input id="name" name="inputName" type="text" placeholder="e.g. Foo" class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Surname">Surname</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-5 control-label" for="Surname">Surname</label>
                                 <div class="col-md-10">
                                     <input id="surname" name="inputSurname" type="text" placeholder="e.g. Bar" class="form-control input-md">
                                     <!-- <textarea class="form-control" id="txtPost" name="inputDescription"></textarea> -->
@@ -28,14 +31,14 @@
 
                         <div class="row">
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Age">Age</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-5 control-label" for="Age">Age</label>
                                 <div class="col-md-10">
                                     <input id="age" name="inputAge" type="number" placeholder="e.g. 25" class="form-control input-md">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="email">E-mail</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-5 control-label" for="email">E-mail</label>
                                 <div class="col-md-10">
                                     <input id="email" name="inputEMail" type="email" placeholder="e.g. fm@bla.com" class="form-control input-md">
                                 </div>
@@ -44,14 +47,14 @@
 
                         <div class="row">
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Street">Street</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-5 control-label" for="Street">Street</label>
                                 <div class="col-md-10">
                                     <input id="street" name="inputStreet" type="text" placeholder="e.g. John Doe Street" class="form-control input-md">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="Houseno">House no.</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="Houseno">House no.</label>
                                 <div class="col-md-10">
                                     <input id="houseno" name="inputHouseNo" type="number" placeholder="e.g. 5567" class="form-control input-md">
                                 </div>
@@ -60,14 +63,14 @@
 
                         <div class="row flex-row">
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="PostalCode">Postal Code</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="PostalCode">Postal Code</label>
                                 <div class="col-md-10">
                                     <input id="postalcode" name="inputPostalCode" type="number" placeholder="e.g. 13627" class="form-control">
                                 </div>
                             </div>
 
                             <div class="form-group col-md-5">
-                                <label style="font-size: 1cm; color: yellow" class="control-label" for="phonenumber">Phone-number</label>
+                                <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="phonenumber">Phone-number</label>
                                 <div class="col-md-10">
                                     <input id="phonenumber" name="inputPhoneNumber" type="tel" placeholder="e.g. +49171123456" class="form-control input-md">
                                 </div>

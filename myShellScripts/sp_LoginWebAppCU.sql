@@ -1,8 +1,8 @@
-USE LoginWebApp;
+USE DockerWebApp;
 DROP PROCEDURE IF EXISTS LoginWebAppCU;
 
 DELIMITER $$
-USE LoginWebApp$$
+USE DockerWebApp$$
 CREATE DEFINER=root@localhost PROCEDURE LoginWebAppCU (
 	IN myp_name VARCHAR(30),
 	IN myp_username VARCHAR(30),

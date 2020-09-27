@@ -1,8 +1,8 @@
-USE LoginWebApp;
+USE DockerWebApp;
 DROP PROCEDURE IF EXISTS ValidateUserLogin;
 
 DELIMITER $$
-USE LoginWebApp$$
+USE DockerWebApp$$
 CREATE DEFINER=root@localhost PROCEDURE ValidateUserLogin (
 	IN myp_username VARCHAR(30)
 )

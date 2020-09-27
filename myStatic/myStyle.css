@@ -56,6 +56,13 @@ h2{
     left: 256px;
 }
 
+/*.toprightlo {
+  position: absolute;
+  top: 14px;
+  right: 176px;
+  font-size: 18px;
+}*/
+
 .toprightsu {
   position: absolute;
   top: 14px;
@@ -70,7 +77,7 @@ h2{
   font-size: 18px;
 }
 
-.my-label {
+/*.my-label {
     font-size: 3cm;
     color: red;
-}
+}*/
