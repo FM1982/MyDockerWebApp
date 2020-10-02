@@ -6,16 +6,16 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 myDockerWebAppFlask: Flask = Flask(__name__, template_folder='myTemplates', static_folder='myStatic')
 
+myDockerWebAppFlask.secret_key = 'Say hello to my little friend!'
+
 
 @myDockerWebAppFlask.template_filter()
 def datetimefilter(value, format='%d/%m/%Y %H:%M:%S'):
-    """Convert a datetime to a different format."""
     return value.strftime(format)
 
 
 myDockerWebAppFlask.jinja_env.filters['datetimefilter'] = datetimefilter
 
-myDockerWebAppFlask.secret_key = 'Say hello to my little friend!'
 
 mysql = MySQL()
 
@@ -32,7 +32,7 @@ myCursor = myConnection.cursor()
 @myDockerWebAppFlask.route('/index.html')
 def index():
     if session.get('user'):
-        return render_template('index.html', current_date_time=datetime.now())  # 'Hello World! It Works!'
+        return render_template('index.html', current_date_time=datetime.now())  # 'Hello World! It Works!' , current_date_time=datetime.now()
     else:
         return render_template('error.html', error='Unauthorized User Access', current_date_time=datetime.now())
 
@@ -68,9 +68,9 @@ def validate_user_login():
                 session['user'] = my_data[0][0]
                 return redirect('/formular.html')
             else:
-                return render_template('error.html', error='Wrong password or email', current_date_time=datetime.now())
+                return render_template('error.html', error='Wrong password or email')
         else:
-            return render_template('error.html', error='Wrong password or email', current_date_time=datetime.now())
+            return render_template('error.html', error='Wrong password or email')
 
     except Exception as ex:
         return render_template('error.html', error=str(ex))
@@ -108,10 +108,47 @@ def sign_ups():
     # myConnection.close()
 
 
+@myDockerWebAppFlask.route('/db_entry_adds', methods=['POST'])
+def db_entry_adds():
+    try:
+        if session.get('user'):
+            my_entry_id = request.form['inputPersonelId']
+            my_entry_name = request.form['inputName']
+            my_entry_surname = request.form['inputSurname']
+            my_entry_age = request.form['inputAge']
+            my_entry_email = request.form['inputEMail']
+            my_entry_street = request.form['inputStreet']
+            my_entry_houseno = request.form['inputHouseNo']
+            my_entry_postalcode = request.form['inputPostalCode']
+            my_entry_country = request.form['inputCountry']
+            my_entry_phonenumber = request.form['inputPhoneNumber']
+            my_user = session.get('user')
+
+            my_connection = mysql.connect()
+            my_cursor = my_connection.cursor()
+            my_cursor.callproc('EntryWebApp', (my_entry_id, my_entry_name, my_entry_surname, my_entry_age,
+                                               my_entry_email, my_entry_street, my_entry_houseno, my_entry_postalcode,
+                                               my_entry_country, my_entry_phonenumber))
+            my_data = my_cursor.fetchall()
+
+            if len(my_data) == 0:
+                my_connection.commit()
+                return render_template('index.html', current_date_time=datetime.now())
+            else:
+                return render_template('error.html', current_date_time=datetime.now())  #, 'An error occurred!'
+        else:
+            return render_template('error.html', current_date_time=datetime.now())  #, 'Unauthorized Access'
+    except Exception as ex:
+        return render_template('error.html', error=str(ex))
+    finally:
+        my_cursor.close()
+        my_connection.close()
+
+
 @myDockerWebAppFlask.route('/logout')
 def logout():
     session.pop('user', None)
-    return redirect('/index.html')
+    return redirect('/')
 
 
 @myDockerWebAppFlask.route('/error.html')
@@ -121,7 +158,7 @@ def error():
 
 @myDockerWebAppFlask.route('/formular.html')
 def formular():
-    return  render_template('formular.html', current_date_time=datetime.now())
+    return render_template('formular.html', current_date_time=datetime.now())
 
 
 if __name__ == '__main__':

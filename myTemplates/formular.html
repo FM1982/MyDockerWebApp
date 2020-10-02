@@ -6,11 +6,20 @@
 {% block content %}
     <h1>{% block title %} Fill in the required information from below {% endblock %}</h1>
         <section>
-            <form class="form-horizontal" method="post" action="/formular">
+            <form class="form-horizontal" method="post" action="/db_entry_adds">
                 <fieldset>
                     <!-- Form Name -->
                     <h2>Use now the fields below to input all informations needed for registering within this docker-based app!</h2>
                     <div class="container border">
+                        <div class="row flex-row">
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="Id">Personel ID</label>
+                                <div class="col-md-10">
+                                    <input id="personelId" name="inputPersonelId" type="number" min="1" placeholder="e.g. 001" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                         <!-- Text input-->
                             <div class="form-group col-md-5">
@@ -33,7 +42,7 @@
                             <div class="form-group col-md-5">
                                 <label style="font-size: 1cm; color: yellow" class="col-md-5 control-label" for="Age">Age</label>
                                 <div class="col-md-10">
-                                    <input id="age" name="inputAge" type="number" placeholder="e.g. 25" class="form-control input-md">
+                                    <input id="age" name="inputAge" type="number" min="1" placeholder="e.g. 25" class="form-control input-md">
                                 </div>
                             </div>
 
@@ -56,7 +65,7 @@
                             <div class="form-group col-md-5">
                                 <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="Houseno">House no.</label>
                                 <div class="col-md-10">
-                                    <input id="houseno" name="inputHouseNo" type="number" placeholder="e.g. 5567" class="form-control input-md">
+                                    <input id="houseno" name="inputHouseNo" min="0" type="number" placeholder="e.g. 5567" class="form-control input-md">
                                 </div>
                             </div>
                         </div>
@@ -65,10 +74,19 @@
                             <div class="form-group col-md-5">
                                 <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="PostalCode">Postal Code</label>
                                 <div class="col-md-10">
-                                    <input id="postalcode" name="inputPostalCode" type="number" placeholder="e.g. 13627" class="form-control">
+                                    <input id="postalcode" name="inputPostalCode" type="number" min="0" placeholder="e.g. 13627" class="form-control">
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-5">
+                                <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="land">country</label>
+                                <div class="col-md-10">
+                                    <input id="land" name="inputCountry" type="tel" placeholder="e.g. germany" class="form-control input-md">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row flex-row">
                             <div class="form-group col-md-5">
                                 <label style="font-size: 1cm; color: yellow" class="col-md-8 control-label" for="phonenumber">Phone-number</label>
                                 <div class="col-md-10">
