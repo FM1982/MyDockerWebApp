@@ -161,5 +161,39 @@ def formular():
     return render_template('formular.html', current_date_time=datetime.now())
 
 
+@myDockerWebAppFlask.route('/retrieve_entries')
+def retrieve_entries():
+    try:
+        if session.get('user'):
+            my_user = session.get('user')
+
+            my_connection = mysql.connect()
+            my_cursor = my_connection.cursor()
+            my_cursor.callproc('RetrieveDataWebApp', (my_user,))
+            the_db_entries = my_cursor.fetchall()
+
+            my_db_entries_dict = []
+            for each_db_entry in the_db_entries:
+                my_db_entry_dict = {
+                    'PersonalId': each_db_entry[0],
+                    'Name': each_db_entry[1],
+                    'Surname': each_db_entry[2],
+                    'Age': each_db_entry[3],
+                    'E-Mail': each_db_entry[4],
+                    'Street': each_db_entry[5],
+                    'HouseNo': each_db_entry[6],
+                    'PostalCode': each_db_entry[7],
+                    'Country': each_db_entry[8],
+                    'PhoneNumber': each_db_entry[9]
+                }
+                my_db_entries_dict.append(my_db_entry_dict)
+
+            return json.dumps(my_db_entries_dict)
+        else:
+            return render_template('/error.html', error = 'Unauthorized Access')
+    except Exception as e:
+        return render_template('/error.html', error=str(e))
+
+
 if __name__ == '__main__':
     myDockerWebAppFlask.run(debug=True, use_debugger=False, use_reloader=False, passthrough_errors=True)
