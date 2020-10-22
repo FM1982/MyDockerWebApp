@@ -98,7 +98,9 @@ function createEntryTable() {
 	entry_postalcode VARCHAR(10) DEFAULT NULL,
 	entry_country VARCHAR(30) DEFAULT NULL,
 	entry_phonenumber VARCHAR(30) DEFAULT NULL,
-	PRIMARY KEY(entry_id) );"
+	entry_user_id int(11) DEFAULT NULL,
+	PRIMARY KEY(entry_id) )
+	ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;"
 
 
 	if [ -f /root/.my.cnf ]; then

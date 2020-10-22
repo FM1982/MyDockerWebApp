@@ -19,6 +19,7 @@ myDockerWebAppFlask.jinja_env.filters['datetimefilter'] = datetimefilter
 
 mysql = MySQL()
 
+myDockerWebAppFlask.config['MYSQL_DATABASE_CHARSET'] = 'utf8mb4'
 myDockerWebAppFlask.config['MYSQL_DATABASE_USER'] = 'fox'
 myDockerWebAppFlask.config['MYSQL_DATABASE_PASSWORD'] = 'LLCTR001'
 myDockerWebAppFlask.config['MYSQL_DATABASE_DB'] = 'DockerWebApp'
@@ -68,12 +69,12 @@ def validate_user_login():
                 session['user'] = my_data[0][0]
                 return redirect('/formular.html')
             else:
-                return render_template('error.html', error='Wrong password or email')
+                return render_template('error.html', error='Wrong password or email', current_date_time=datetime.now())
         else:
-            return render_template('error.html', error='Wrong password or email')
+            return render_template('error.html', error='Wrong password or email', current_date_time=datetime.now())
 
     except Exception as ex:
-        return render_template('error.html', error=str(ex))
+        return render_template('error.html', error=str(ex), current_date_time=datetime.now())
     finally:
         myCursor.close()
         vul_connection.close()
@@ -104,51 +105,50 @@ def sign_ups():
         # myConnection.close()
         return json.dumps({'error': str(my_data[0])})
 
-    # myCursor.close()
-    # myConnection.close()
+    myCursor.close()
+    myConnection.close()
 
 
 @myDockerWebAppFlask.route('/db_entry_adds', methods=['POST'])
 def db_entry_adds():
     try:
         if session.get('user'):
-            my_entry_id = request.form['inputPersonelId']
-            my_entry_name = request.form['inputName']
+            # my_entry_id = request.form['inputPersonelId']
+            my_entry_name = request.form['inputNames']
             my_entry_surname = request.form['inputSurname']
             my_entry_age = request.form['inputAge']
-            my_entry_email = request.form['inputEMail']
+            my_entry_email = request.form['inputEMails']
             my_entry_street = request.form['inputStreet']
             my_entry_houseno = request.form['inputHouseNo']
             my_entry_postalcode = request.form['inputPostalCode']
             my_entry_country = request.form['inputCountry']
             my_entry_phonenumber = request.form['inputPhoneNumber']
-            my_user = session.get('user')
+            my_entry_user_id = session.get('user')
 
             my_connection = mysql.connect()
             my_cursor = my_connection.cursor()
-            my_cursor.callproc('EntryWebApp', (my_entry_id, my_entry_name, my_entry_surname, my_entry_age,
+            my_cursor.callproc('EntryWebApp', (my_entry_name, my_entry_surname, my_entry_age,
                                                my_entry_email, my_entry_street, my_entry_houseno, my_entry_postalcode,
-                                               my_entry_country, my_entry_phonenumber))
+                                               my_entry_country, my_entry_phonenumber, my_entry_user_id))
             my_data = my_cursor.fetchall()
 
             if len(my_data) == 0:
                 my_connection.commit()
-                return render_template('index.html', current_date_time=datetime.now())
+                return render_template('db_entries.html', current_date_time=datetime.now())
             else:
-                return render_template('error.html', current_date_time=datetime.now())  #, 'An error occurred!'
+                return render_template('error.html', error='An error occurred!', current_date_time=datetime.now())  #, 'An error occurred!'
         else:
-            return render_template('error.html', current_date_time=datetime.now())  #, 'Unauthorized Access'
+            return render_template('error.html', error='Unauthorized Access', current_date_time=datetime.now())  #, 'Unauthorized Access'
     except Exception as ex:
-        return render_template('error.html', error=str(ex))
+        return render_template('error.html', error=str(ex), current_date_time=datetime.now())
     finally:
         my_cursor.close()
         my_connection.close()
 
 
-@myDockerWebAppFlask.route('/logout')
-def logout():
-    session.pop('user', None)
-    return redirect('/')
+@myDockerWebAppFlask.route('/db_entries.html')
+def db_entries():
+    render_template('db_entries.html', current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/error.html')
@@ -175,24 +175,30 @@ def retrieve_entries():
             my_db_entries_dict = []
             for each_db_entry in the_db_entries:
                 my_db_entry_dict = {
-                    'PersonalId': each_db_entry[0],
-                    'Name': each_db_entry[1],
+                    'Names': each_db_entry[1],
                     'Surname': each_db_entry[2],
                     'Age': each_db_entry[3],
-                    'E-Mail': each_db_entry[4],
+                    'EMail': each_db_entry[4],
                     'Street': each_db_entry[5],
                     'HouseNo': each_db_entry[6],
                     'PostalCode': each_db_entry[7],
                     'Country': each_db_entry[8],
-                    'PhoneNumber': each_db_entry[9]
+                    'PhoneNumber': each_db_entry[9],
+                    'PersonelId': each_db_entry[10]
                 }
                 my_db_entries_dict.append(my_db_entry_dict)
 
             return json.dumps(my_db_entries_dict)
         else:
-            return render_template('/error.html', error = 'Unauthorized Access')
+            return render_template('error.html', error='Unauthorized Access')
     except Exception as e:
-        return render_template('/error.html', error=str(e))
+        return render_template('error.html', error=str(e))
+
+
+@myDockerWebAppFlask.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/')
 
 
 if __name__ == '__main__':

@@ -3,15 +3,15 @@ How to link a procedure to your database via mysql:
 Do the following:
 
 ->1. create a db with its name via e.g. a bash script like MyDockerWebAppMySQLCDB.sh
-->1.1 e.g. ./MyDockerWebAppMySQLCDB.sh --host=localhost --database=LoginWebApp --user=fox --table_log=credentials --table_entry=dbentries --pass='LLCTR001'
+->1.1 e.g. ./MyDockerWebAppMySQLCDB.sh --host=localhost --database=DockerWebApp --user=fox --table_log=credentials --table_entry=dbentries --pass='LLCTR001'
 ->2. create a procedure e.g. a sql shell script like sp_LoginWebAppCU.sql
 ->3. check via mysql that the db is created
 ->4. link the procedure with the db via the following command: mysql -u root -p <DATABASE_NAME> < <PROCEDURE_SHELL_SCRIPT_NAME>
-->-> e.g. $>mysql -u root -p LoginWebApp < sp_LoginWebAppCU.sql
+->-> e.g. $>mysql -u root -p DockerWebApp < sp_LoginWebAppCU.sql
 ->5. check the procedure via mysql
 ->6. e.g. mysql>show databases;
 ->-> mysql>use LoginWebApp;
-->-> mysql>SHOW PROCEDURE STATUS WHERE db = 'LoginWebApp';
+->-> mysql>SHOW PROCEDURE STATUS WHERE db = 'DockerWebApp';
 ->7. Profit!
 
 currenttestaccount: 	username: fm@bla.com
