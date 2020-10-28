@@ -101,12 +101,12 @@ def sign_ups():
         myConnection.commit()
         return json.dumps({'message': 'The User has been created successfully!'})
     else:
-        # myCursor.close()
-        # myConnection.close()
+        myCursor.close()
+        myConnection.close()
         return json.dumps({'error': str(my_data[0])})
 
-    myCursor.close()
-    myConnection.close()
+    # myCursor.close()
+    # myConnection.close()
 
 
 @myDockerWebAppFlask.route('/db_entry_adds', methods=['POST'])
@@ -141,9 +141,9 @@ def db_entry_adds():
             return render_template('error.html', error='Unauthorized Access', current_date_time=datetime.now())  #, 'Unauthorized Access'
     except Exception as ex:
         return render_template('error.html', error=str(ex), current_date_time=datetime.now())
-    finally:
-        my_cursor.close()
-        my_connection.close()
+    # finally:
+        # my_cursor.close()
+        # my_connection.close()
 
 
 @myDockerWebAppFlask.route('/db_entries.html')

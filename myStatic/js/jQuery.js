@@ -1,7 +1,8 @@
+//<script>
 $(function() {
 
     $('#btnSignUp').click(function() {
- 
+
         $.ajax({
             url: '/sign_ups',
             data: $('form').serialize(),
@@ -17,3 +18,4 @@ $(function() {
     });
 
 });
+//</script>

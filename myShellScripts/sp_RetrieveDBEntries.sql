@@ -9,4 +9,4 @@ CREATE PROCEDURE RetrieveDataWebApp (
 BEGIN
 	select * from dbentries where entry_user_id = myp_entry_user_id;
 END$$
-
+DELIMITER;

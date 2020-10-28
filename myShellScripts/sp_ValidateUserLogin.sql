@@ -9,4 +9,4 @@ CREATE DEFINER=root@localhost PROCEDURE ValidateUserLogin (
 BEGIN
 	select * from credentials where myuser_username = myp_username;
 END$$
-
+DELIMITER;

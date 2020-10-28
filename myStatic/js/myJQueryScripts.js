@@ -1,20 +1,21 @@
 //<script>
 $(function() {
-    $.ajax({url: '/retrieve_entries',
+    $.ajax({
+            url: '/retrieve_entries',
             type: 'GET',
             success: function (res){
                 console.log(res);
 
-                var div = $('<div>').attr('class', 'list-group').append($('<a>').attr('class', 'list-group-item active')
+                let div = $('<div>').attr('class', 'list-group').append($('<a>').attr('class', 'list-group-item active')
                     .append($('<p>').attr('class', 'list-group-item-text'), $('<p>').attr('class', 'list-group-item-text'),
                         $('<p>').attr('class', 'list-group-item-text'), $('<p>').attr('class', 'list-group-item-text'),
                         $('<p>').attr('class', 'list-group-item-text'), $('<p>').attr('class', 'list-group-item-text'),
                         $('<p>').attr('class', 'list-group-item-text'), $('<p>').attr('class', 'list-group-item-text'),
-                        $('<p>').attr('class', 'list-group-item-text'))); /**/
+                        $('<p>').attr('class', 'list-group-item-text'))); /*$('<div>').attr('class', 'container').append()*/
                 //console.log(div);
-                var dataObject = JSON.parse(res);
+                let dataObject = JSON.parse(res);
                 //console.log(dataObject);
-                var entries = '';
+                let entries = '';
 
                 $.each(dataObject, function (index, value){
                     entries = $(div).clone();
