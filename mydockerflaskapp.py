@@ -1,10 +1,10 @@
 from datetime import datetime
 
-from flask import Flask, render_template, request, json, session, redirect
+from flask import Flask, render_template, request, json, session, redirect  # , jsonify
 from flaskext.mysql import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 
-myDockerWebAppFlask: Flask = Flask(__name__, template_folder='myTemplates', static_folder='myStatic')
+myDockerWebAppFlask: Flask = Flask(__name__, template_folder='myTemplates',  static_folder='myStatic')
 
 myDockerWebAppFlask.secret_key = 'Say hello to my little friend!'
 
@@ -172,7 +172,7 @@ def retrieve_entries():
             my_cursor.callproc('RetrieveDataWebApp', (my_user,))
             the_db_entries = my_cursor.fetchall()
 
-            my_db_entries_dict = []
+            my_db_entries_list = []
             for each_db_entry in the_db_entries:
                 my_db_entry_dict = {
                     'Names': each_db_entry[1],
@@ -184,11 +184,11 @@ def retrieve_entries():
                     'PostalCode': each_db_entry[7],
                     'Country': each_db_entry[8],
                     'PhoneNumber': each_db_entry[9],
-                    'PersonelId': each_db_entry[10]
+                    # 'PersonelId': each_db_entry[10]
                 }
-                my_db_entries_dict.append(my_db_entry_dict)
+                my_db_entries_list.append(my_db_entry_dict)
 
-            return json.dumps(my_db_entries_dict)
+            return json.dumps(my_db_entries_list)  # jsonify({'Entry_List': my_db_entries_list})
         else:
             return render_template('error.html', error='Unauthorized Access')
     except Exception as e:

@@ -42,4 +42,4 @@ BEGIN
 		myp_entry_user_id
 	);
 END$$
-DELIMITER;
+DELIMITER ;
