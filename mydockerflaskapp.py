@@ -148,7 +148,17 @@ def db_entry_adds():
 
 @myDockerWebAppFlask.route('/db_entries.html')
 def db_entries():
+    ''' my_connection = mysql.connect()
+    my_cursor = my_connection.cursor()
+    my_cursor.execute("select * from DockerWebApp.dbentries;")
+    my_data = my_cursor.fetchall()
+
+    if len(my_data) == 0:
+        my_connection.commit()'''
     render_template('db_entries.html', current_date_time=datetime.now())
+    '''else:
+        return render_template('error.html', error='An error occurred!',
+                               current_date_time=datetime.now())  '''
 
 
 @myDockerWebAppFlask.route('/error.html')

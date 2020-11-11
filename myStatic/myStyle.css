@@ -56,6 +56,12 @@ h2{
     left: 256px;
 }
 
+.content {
+    position: absolute;
+    top: 12px;
+    left: 384px;
+}
+
 /*.toprightlo {
   position: absolute;
   top: 14px;
