@@ -1,4 +1,5 @@
 from datetime import datetime
+from symbol import try_stmt
 
 from flask import Flask, render_template, request, json, session, redirect  # , jsonify
 from flaskext.mysql import MySQL
@@ -29,6 +30,8 @@ mysql.init_app(myDockerWebAppFlask)
 myConnection = mysql.connect()
 myCursor = myConnection.cursor()
 
+DB_EXISTS_DATA = 'true'
+
 
 @myDockerWebAppFlask.route('/index.html')
 def index():
@@ -56,6 +59,8 @@ def sign_in():
 @myDockerWebAppFlask.route('/ValidateUserLogin', methods=['POST'])
 def validate_user_login():
     try:
+        global DB_EXISTS_DATA
+
         my_email = request.form['inputEmail']
         my_password = request.form['inputPassword']
 
@@ -67,7 +72,10 @@ def validate_user_login():
         if len(my_data) > 0:
             if check_password_hash(str(my_data[0][3]), my_password):
                 session['user'] = my_data[0][0]
-                return redirect('/formular.html')
+                if DB_EXISTS_DATA == 'false':
+                    return redirect('/formular.html')
+                else:
+                    return redirect('/show_current_db_entries.html')
             else:
                 return render_template('error.html', error='Wrong password or email', current_date_time=datetime.now())
         else:
@@ -113,6 +121,8 @@ def sign_ups():
 def db_entry_adds():
     try:
         if session.get('user'):
+            global DB_EXISTS_DATA
+
             # my_entry_id = request.form['inputPersonelId']
             my_entry_name = request.form['inputNames']
             my_entry_surname = request.form['inputSurname']
@@ -134,6 +144,7 @@ def db_entry_adds():
 
             if len(my_data) == 0:
                 my_connection.commit()
+                DB_EXISTS_DATA = 'true'
                 return render_template('db_entries.html', current_date_time=datetime.now())
             else:
                 return render_template('error.html', error='An error occurred!', current_date_time=datetime.now())  #, 'An error occurred!'
@@ -148,17 +159,12 @@ def db_entry_adds():
 
 @myDockerWebAppFlask.route('/db_entries.html')
 def db_entries():
-    ''' my_connection = mysql.connect()
-    my_cursor = my_connection.cursor()
-    my_cursor.execute("select * from DockerWebApp.dbentries;")
-    my_data = my_cursor.fetchall()
+    return render_template('db_entries.html', current_date_time=datetime.now())
 
-    if len(my_data) == 0:
-        my_connection.commit()'''
-    render_template('db_entries.html', current_date_time=datetime.now())
-    '''else:
-        return render_template('error.html', error='An error occurred!',
-                               current_date_time=datetime.now())  '''
+
+@myDockerWebAppFlask.route('/show_current_db_entries.html')
+def show_current_db_entries():
+    return render_template('show_current_db_entries.html', current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/error.html')
@@ -169,6 +175,41 @@ def error():
 @myDockerWebAppFlask.route('/formular.html')
 def formular():
     return render_template('formular.html', current_date_time=datetime.now())
+
+
+'''@myDockerWebAppFlask.route('/show_db_entries.html', methods=['POST'])
+def show_db_entries():
+    try:
+        if session.get('user'):
+            my_user = session.get('user')
+
+            my_connection = mysql.connect()
+            my_cursor = my_connection.cursor()
+            my_cursor.callproc('RetrieveDataWebApp', my_user)
+            # my_cursor.execute("select * from DockerWebApp.dbentries;", (my_user,))
+            current_db_entries = my_cursor.fetchall()
+
+            my_current_db_entries_list = []
+            for each_db_entry in current_db_entries:
+                my_current_db_entry_dict = {
+                    'Names': each_db_entry[1],
+                    'Surname': each_db_entry[2],
+                    'Age': each_db_entry[3],
+                    'EMail': each_db_entry[4],
+                    'Street': each_db_entry[5],
+                    'HouseNo': each_db_entry[6],
+                    'PostalCode': each_db_entry[7],
+                    'Country': each_db_entry[8],
+                    'PhoneNumber': each_db_entry[9],
+                }
+                my_current_db_entries_list.append(my_current_db_entry_dict)
+
+            return json.dumps(my_current_db_entries_list)  # json.dumps(my_current_db_entries_list)
+        else:
+            return render_template('error.html', error='Unauthorized Access')
+    except Exception as e:
+        return render_template('error.html', error=str(e))
+'''
 
 
 @myDockerWebAppFlask.route('/retrieve_entries')

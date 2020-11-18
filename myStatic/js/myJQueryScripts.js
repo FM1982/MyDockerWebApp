@@ -20,7 +20,7 @@ $(function() {
                         $('<p3>').attr('class', 'list-group-item-text').add(br3), $('<p4>').attr('class', 'list-group-item-text').add(br4),
                         $('<p5>').attr('class', 'list-group-item-text').add(br5), $('<p6>').attr('class', 'list-group-item-text').add(br6),
                         $('<p7>').attr('class', 'list-group-item-text').add(br7), $('<p8>').attr('class', 'list-group-item-text').add(br8),
-                        $('<p9>').attr('class', 'list-group-item-text').add(br9))); /*$('<div>').attr('class', 'container').append()*/
+                        $('<p9>').attr('class', 'list-group-item-text').add(br9)));
 
                 let dataObject = JSON.parse(res);
 

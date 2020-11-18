@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <div style="position: absolute; top: 14px; right: 176px; font-size: 18px"><a class="navbar-brand btn-lg btn-warning" href="index.html">Logout</a></div>
+    <div style="position: absolute; top: 12px; left: 384px;"><a class="navbar-brand btn-lg btn-info" href="{{url_for('formular')}}">Formular</a></div>
+{% endblock %}
+
+{% block content %}
+    <h1>{% block title %} Here you can see the entries of your filled <a href="formular.html">formular</a> from before {% endblock %}</h1>
+
+    <script>
+        $(function() {
+        $.ajax({
+            url: '/retrieve_entries',
+            type: 'GET',
+            success: function (res){
+                let dataObject = JSON.parse(res);
+
+                $('#jumbotronTemplate').tmpl(dataObject).appendTo('#jumbotron');
+            },
+            error: function (error){
+                console.log(error);
+            }
+        });
+    });
+    </script>
+
+    <div id="jumbotronTemplate" class="jumbotron">
+
+    </div>
+
+{% endblock %}
+
+{% block js_ajax %}
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <!-- <script src="myStatic/js/myJQueryScripts2.js"></script> -->
+{% endblock %}
