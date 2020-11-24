@@ -1,5 +1,5 @@
 from datetime import datetime
-from symbol import try_stmt
+# from symbol import try_stmt
 
 from flask import Flask, render_template, request, json, session, redirect  # , jsonify
 from flaskext.mysql import MySQL
@@ -11,11 +11,11 @@ myDockerWebAppFlask.secret_key = 'Say hello to my little friend!'
 
 
 @myDockerWebAppFlask.template_filter()
-def datetimefilter(value, format='%d/%m/%Y %H:%M:%S'):
-    return value.strftime(format)
+def date_time_filter(value, my_format='%d/%m/%Y %H:%M:%S'):
+    return value.strftime(my_format)
 
 
-myDockerWebAppFlask.jinja_env.filters['datetimefilter'] = datetimefilter
+myDockerWebAppFlask.jinja_env.filters['datetimefilter'] = date_time_filter
 
 
 mysql = MySQL()
@@ -30,13 +30,45 @@ mysql.init_app(myDockerWebAppFlask)
 myConnection = mysql.connect()
 myCursor = myConnection.cursor()
 
-DB_EXISTS_DATA = 'true'
+
+DB_EXISTS_DATA = 'false'
+
+
+@myDockerWebAppFlask.route('/my_db_entry_check')
+def my_db_entry_check():
+    try:
+        if session.get('user'):
+            global DB_EXISTS_DATA
+
+            my_user = session.get('user')
+
+            my_connection = mysql.connect()
+            my_db_cursor = my_connection.cursor()
+            my_db_cursor.callproc('RetrieveDataWebApp', (my_user,))
+            my_db_data = my_db_cursor.fetchall()
+
+            if len(my_db_data) > 0:
+                DB_EXISTS_DATA = 'true'
+                my_connection.close()
+                my_db_cursor.close()
+                return DB_EXISTS_DATA
+            else:
+                DB_EXISTS_DATA = 'false'
+                my_connection.close()
+                my_db_cursor.close()
+                return DB_EXISTS_DATA
+        else:
+            return render_template('error.html', error='Unauthorized Access', current_date_time=datetime.now())
+            # , 'Unauthorized Access'
+    except Exception as ex:
+        return render_template('error.html', error=str(ex), current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/index.html')
 def index():
     if session.get('user'):
-        return render_template('index.html', current_date_time=datetime.now())  # 'Hello World! It Works!' , current_date_time=datetime.now()
+        return render_template('index.html', current_date_time=datetime.now())
+        # 'Hello World! It Works!' , current_date_time=datetime.now()
     else:
         return render_template('error.html', error='Unauthorized User Access', current_date_time=datetime.now())
 
@@ -72,6 +104,7 @@ def validate_user_login():
         if len(my_data) > 0:
             if check_password_hash(str(my_data[0][3]), my_password):
                 session['user'] = my_data[0][0]
+                my_db_entry_check()
                 if DB_EXISTS_DATA == 'false':
                     return redirect('/formular.html')
                 else:
@@ -147,9 +180,11 @@ def db_entry_adds():
                 DB_EXISTS_DATA = 'true'
                 return render_template('db_entries.html', current_date_time=datetime.now())
             else:
-                return render_template('error.html', error='An error occurred!', current_date_time=datetime.now())  #, 'An error occurred!'
+                return render_template('error.html', error='An error occurred!', current_date_time=datetime.now())
+                # , 'An error occurred!'
         else:
-            return render_template('error.html', error='Unauthorized Access', current_date_time=datetime.now())  #, 'Unauthorized Access'
+            return render_template('error.html', error='Unauthorized Access', current_date_time=datetime.now())
+            # , 'Unauthorized Access'
     except Exception as ex:
         return render_template('error.html', error=str(ex), current_date_time=datetime.now())
     # finally:
@@ -174,7 +209,12 @@ def error():
 
 @myDockerWebAppFlask.route('/formular.html')
 def formular():
-    return render_template('formular.html', current_date_time=datetime.now())
+    global DB_EXISTS_DATA
+
+    if DB_EXISTS_DATA == 'false':
+        return render_template('formular.html', current_date_time=datetime.now(), DB_EXISTS_DATA=False)
+    elif DB_EXISTS_DATA == 'true':
+        return render_template('formular.html', current_date_time=datetime.now(), DB_EXISTS_DATA=True)
 
 
 '''@myDockerWebAppFlask.route('/show_db_entries.html', methods=['POST'])
