@@ -164,6 +164,7 @@ def db_entry_adds():
             my_entry_street = request.form['inputStreet']
             my_entry_houseno = request.form['inputHouseNo']
             my_entry_postalcode = request.form['inputPostalCode']
+            my_entry_city = request.form['inputCity']
             my_entry_country = request.form['inputCountry']
             my_entry_phonenumber = request.form['inputPhoneNumber']
             my_entry_user_id = session.get('user')
@@ -172,7 +173,8 @@ def db_entry_adds():
             my_cursor = my_connection.cursor()
             my_cursor.callproc('EntryWebApp', (my_entry_name, my_entry_surname, my_entry_age,
                                                my_entry_email, my_entry_street, my_entry_houseno, my_entry_postalcode,
-                                               my_entry_country, my_entry_phonenumber, my_entry_user_id))
+                                               my_entry_city, my_entry_country, my_entry_phonenumber,
+                                               my_entry_user_id))
             my_data = my_cursor.fetchall()
 
             if len(my_data) == 0:
@@ -269,12 +271,13 @@ def retrieve_entries():
                     'Names': each_db_entry[1],
                     'Surname': each_db_entry[2],
                     'Age': each_db_entry[3],
-                    'EMail': each_db_entry[4],
+                    'EMails': each_db_entry[4],
                     'Street': each_db_entry[5],
                     'HouseNo': each_db_entry[6],
                     'PostalCode': each_db_entry[7],
-                    'Country': each_db_entry[8],
-                    'PhoneNumber': each_db_entry[9],
+                    'City': each_db_entry[8],
+                    'Country': each_db_entry[9],
+                    'PhoneNumber': each_db_entry[10],
                     # 'PersonelId': each_db_entry[10]
                 }
                 my_db_entries_list.append(my_db_entry_dict)

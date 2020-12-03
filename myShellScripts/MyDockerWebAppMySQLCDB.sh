@@ -96,6 +96,7 @@ function createEntryTable() {
 	entry_street VARCHAR(30) DEFAULT NULL,
 	entry_houseno VARCHAR(30) DEFAULT NULL,
 	entry_postalcode VARCHAR(10) DEFAULT NULL,
+	entry_city VARCHAR(30) DEFAULT NULL,
 	entry_country VARCHAR(30) DEFAULT NULL,
 	entry_phonenumber VARCHAR(30) DEFAULT NULL,
 	entry_user_id int(11) DEFAULT NULL,

@@ -11,6 +11,7 @@ CREATE DEFINER=root@localhost PROCEDURE EntryWebApp (
 	IN myp_entry_street VARCHAR(30),
 	IN myp_entry_houseno VARCHAR(30),
 	IN myp_entry_postalcode VARCHAR(10),
+	IN myp_entry_city VARCHAR(30),
 	IN myp_entry_country VARCHAR(30),
 	IN myp_entry_phonenumber VARCHAR(30),
 	IN myp_entry_user_id int(11)
@@ -24,6 +25,7 @@ BEGIN
 		entry_street,
 		entry_houseno,
 		entry_postalcode,
+		entry_city,
 		entry_country,
 		entry_phonenumber,
 		entry_user_id
@@ -37,6 +39,7 @@ BEGIN
 		myp_entry_street,
 		myp_entry_houseno,
 		myp_entry_postalcode,
+		myp_entry_city,
 		myp_entry_country,
 		myp_entry_phonenumber,
 		myp_entry_user_id

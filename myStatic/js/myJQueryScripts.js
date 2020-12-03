@@ -14,13 +14,14 @@ $(function() {
                 let br7 = document.createElement('br');
                 let br8 = document.createElement('br');
                 let br9 = document.createElement('br');
+                let br11 = document.createElement('br');
 
                 let div = $('<div>').attr('class', 'list-group').append($('<a>').attr('class', 'list-group-item active')
                     .append($('<p1>').attr('class', 'list-group-item-text').add(br1), $('<p2>').attr('class', 'list-group-item-text').add(br2),
                         $('<p3>').attr('class', 'list-group-item-text').add(br3), $('<p4>').attr('class', 'list-group-item-text').add(br4),
                         $('<p5>').attr('class', 'list-group-item-text').add(br5), $('<p6>').attr('class', 'list-group-item-text').add(br6),
                         $('<p7>').attr('class', 'list-group-item-text').add(br7), $('<p8>').attr('class', 'list-group-item-text').add(br8),
-                        $('<p9>').attr('class', 'list-group-item-text').add(br9)));
+                        $('<p9>').attr('class', 'list-group-item-text').add(br9), $('<p11>').attr('class', 'list-group-item-text').add(br11)));
 
                 let dataObject = JSON.parse(res);
 
@@ -35,8 +36,9 @@ $(function() {
                     $(entries).find('p5').text('Strasse: ' + value.Street);
                     $(entries).find('p6').text('Hausnummer: ' + value.HouseNo);
                     $(entries).find('p7').text('Postleitzahl: ' + value.PostalCode);
-                    $(entries).find('p8').text('Land: ' + value.Country);
-                    $(entries).find('p9').text('Telefonnummer: ' + value.PhoneNumber);
+                    $(entries).find('p8').text('Stadt: ' + value.City);
+                    $(entries).find('p9').text('Land: ' + value.Country);
+                    $(entries).find('p11').text('Telefonnummer: ' + value.PhoneNumber);
                     $('.jumbotron').append(entries);
                 });
             },
