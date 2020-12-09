@@ -8,8 +8,11 @@
         <div style="position: absolute; top: 12px; left: 384px;"><a class="navbar-brand btn-lg btn-info" href="{{url_for('show_current_db_entries')}}">DB Content</a></div>
     {% endif %}
 {% endblock %}
+
+{% block title %} Database Mask {% endblock %}
+
 {% block content %}
-    <h1>{% block title %} Fill in the required information from below {% endblock %}</h1>
+    <h1>Fill in the required information from below</h1>
         <section>
             <form class="form-horizontal" method="post" action="/db_entry_adds">
                 <fieldset>
