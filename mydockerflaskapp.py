@@ -1,22 +1,22 @@
-from datetime import datetime
+# from datetime import datetime
 # from symbol import try_stmt
 
-from flask import Flask, render_template, request, json, session, redirect  # , jsonify
+from flask import Flask, render_template, request, json, session, redirect  # , url_for, jsonify
 from flaskext.mysql import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
 
-myDockerWebAppFlask: Flask = Flask(__name__, template_folder='myTemplates',  static_folder='myStatic')
+myDockerWebAppFlask: Flask = Flask(__name__, template_folder='myTemplates', static_folder='myStatic')
 
 myDockerWebAppFlask.secret_key = 'Say hello to my little friend!'
 
 
-@myDockerWebAppFlask.template_filter()
-def date_time_filter(value, my_format='%d/%m/%Y %H:%M:%S'):
-    return value.strftime(my_format)
+# @myDockerWebAppFlask.template_filter()
+# def date_time_filter(value, my_format='%d/%m/%Y %H:%M:%S'):
+#    return value.strftime(my_format)
+# put into base html if we want it back or found a better solution then quick and dirty! ! !
+# <!-- {{ current_date_time | datetimefilter }} -->
 
-
-myDockerWebAppFlask.jinja_env.filters['datetimefilter'] = date_time_filter
-
+# myDockerWebAppFlask.jinja_env.filters['datetimefilter'] = date_time_filter
 
 mysql = MySQL()
 
@@ -29,7 +29,6 @@ mysql.init_app(myDockerWebAppFlask)
 
 myConnection = mysql.connect()
 myCursor = myConnection.cursor()
-
 
 DB_EXISTS_DATA = 'false'
 
@@ -58,34 +57,34 @@ def my_db_entry_check():
                 my_db_cursor.close()
                 return DB_EXISTS_DATA
         else:
-            return render_template('error.html', error='Unauthorized Access', current_date_time=datetime.now())
+            return render_template('error.html', error='Unauthorized Access')  # , current_date_time=datetime.now())
             # , 'Unauthorized Access'
     except Exception as ex:
-        return render_template('error.html', error=str(ex), current_date_time=datetime.now())
+        return render_template('error.html', error=str(ex))  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/index.html')
 def index():
     if session.get('user'):
-        return render_template('index.html', current_date_time=datetime.now())
+        return render_template('index.html')  # , current_date_time=datetime.now())
         # 'Hello World! It Works!' , current_date_time=datetime.now()
     else:
-        return render_template('error.html', error='Unauthorized User Access', current_date_time=datetime.now())
+        return render_template('error.html', error='Unauthorized User Access')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/contact.html')
 def contact():
-    return render_template('contact.html', current_date_time=datetime.now())
+    return render_template('contact.html')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/about.html')
 def about():
-    return render_template('about.html', current_date_time=datetime.now())
+    return render_template('about.html')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/sign_in.html')
 def sign_in():
-    return render_template('sign_in.html', current_date_time=datetime.now())
+    return render_template('sign_in.html')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/ValidateUserLogin', methods=['POST'])
@@ -110,12 +109,14 @@ def validate_user_login():
                 else:
                     return redirect('/show_current_db_entries.html')
             else:
-                return render_template('error.html', error='Wrong password or email', current_date_time=datetime.now())
+                return render_template('error.html', error='Wrong password or email')
+                # , current_date_time=datetime.now())
         else:
-            return render_template('error.html', error='Wrong password or email', current_date_time=datetime.now())
+            return render_template('error.html', error='Wrong password or email')
+            # , current_date_time=datetime.now())
 
     except Exception as ex:
-        return render_template('error.html', error=str(ex), current_date_time=datetime.now())
+        return render_template('error.html', error=str(ex))  # , current_date_time=datetime.now())
     finally:
         myCursor.close()
         vul_connection.close()
@@ -123,7 +124,7 @@ def validate_user_login():
 
 @myDockerWebAppFlask.route('/sign_up.html')
 def sign_up():
-    return render_template('sign_up.html', current_date_time=datetime.now())
+    return render_template('sign_up.html')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/sign_ups', methods=['POST'])
@@ -140,11 +141,12 @@ def sign_ups():
 
     if len(my_data) == 0:
         myConnection.commit()
-        return json.dumps({'message': 'The User has been created successfully!'})
+        return render_template('index.html')  # , current_date_time=datetime.now())
     else:
-        myCursor.close()
-        myConnection.close()
-        return json.dumps({'error': str(my_data[0])})
+        # myCursor.close()
+        # myConnection.close()
+        return render_template('error.html', error=str(my_data[0]))  # , current_date_time=datetime.now())
+        # return json.dumps({'error': str(my_data[0])})
 
     # myCursor.close()
     # myConnection.close()
@@ -180,33 +182,33 @@ def db_entry_adds():
             if len(my_data) == 0:
                 my_connection.commit()
                 DB_EXISTS_DATA = 'true'
-                return render_template('db_entries.html', current_date_time=datetime.now())
+                return render_template('db_entries.html')  # , current_date_time=datetime.now())
             else:
-                return render_template('error.html', error='An error occurred!', current_date_time=datetime.now())
+                return render_template('error.html', error='An error occurred!')  # , current_date_time=datetime.now())
                 # , 'An error occurred!'
         else:
-            return render_template('error.html', error='Unauthorized Access', current_date_time=datetime.now())
+            return render_template('error.html', error='Unauthorized Access')  # , current_date_time=datetime.now())
             # , 'Unauthorized Access'
     except Exception as ex:
-        return render_template('error.html', error=str(ex), current_date_time=datetime.now())
+        return render_template('error.html', error=str(ex))  # , current_date_time=datetime.now())
     # finally:
-        # my_cursor.close()
-        # my_connection.close()
+    # my_cursor.close()
+    # my_connection.close()
 
 
 @myDockerWebAppFlask.route('/db_entries.html')
 def db_entries():
-    return render_template('db_entries.html', current_date_time=datetime.now())
+    return render_template('db_entries.html')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/show_current_db_entries.html')
 def show_current_db_entries():
-    return render_template('show_current_db_entries.html', current_date_time=datetime.now())
+    return render_template('show_current_db_entries.html')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/error.html')
 def error():
-    return render_template('error.html', current_date_time=datetime.now())
+    return render_template('error.html')  # , current_date_time=datetime.now())
 
 
 @myDockerWebAppFlask.route('/formular.html')
@@ -214,9 +216,11 @@ def formular():
     global DB_EXISTS_DATA
 
     if DB_EXISTS_DATA == 'false':
-        return render_template('formular.html', current_date_time=datetime.now(), DB_EXISTS_DATA=False)
+        return render_template('formular.html', DB_EXISTS_DATA=False)
+        # , current_date_time=datetime.now(), DB_EXISTS_DATA=False)
     elif DB_EXISTS_DATA == 'true':
-        return render_template('formular.html', current_date_time=datetime.now(), DB_EXISTS_DATA=True)
+        return render_template('formular.html', DB_EXISTS_DATA=True)
+        # , current_date_time=datetime.now(), DB_EXISTS_DATA=True)
 
 
 '''@myDockerWebAppFlask.route('/show_db_entries.html', methods=['POST'])

@@ -1,6 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--    <script>
+        const monthnames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+            'October', 'November', 'December'];
+
+        const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+        function  startTime() {
+            //let lbrk = "<br>";
+            let today = new Date();
+            let d = today.getDate();
+            let wd = weekdays[today.getDay() - 1];
+            let mo = monthnames[today.getMonth()];
+            let y = today.getFullYear();
+            let h = today.getHours();
+            let m = today.getMinutes();
+            let s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('date').innerHTML = "Current Date: " + wd + " the " + d + " " + mo + " of " + y;
+            //"Current Date: " + wd + " the " + d + " " + mo + " of " + y + lbrk + " Current Time: " + h + ":" + m + ":" + s;
+            document.getElementById('time').innerHTML = "Current Time: " + h + ":" + m + ":" + s;
+            //"Current Date: " + wd + " the " + d + " " + mo + " of " + y + " Current Time: " + h + ":" + m + ":" + s;
+            let t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+            return i;
+        }
+    </script> -->
+
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,7 +45,7 @@
 
     <title>{% block title %} Index {% endblock %}</title>
 </head>
-<body> <!-- background="{{ url_for('static', filename='bg_webapp.png') }}" works but not good! reformatting etc. -->
+<body onload="startTime()"> <!-- background="{{ url_for('static', filename='bg_webapp.png') }}" works but not good! reformatting etc. -->
     <nav class="navbar navbar-expand-md navbar-light bg-light ">
         <a class="btn btn-lg btn-primary" role="button" href="{{ url_for('index')}}">Home</a>
         <div class="contact"><a class="navbar-brand btn-lg btn-secondary" href="{{ url_for('contact')}}">Contact</a></div>
@@ -40,7 +70,10 @@
             <a href="https://www.mycompany.com/" target="_blank"><p style="font-size: 1.25cm; color: black">MyCompany GmbH</p></a>
         </div>
         <p>&copy; MyCompany GmbH</p>
-        <p style="color: black">Current Date and Time: {{ current_date_time | datetimefilter }}</p>
+        <div class="myfooter">
+            <b style="color: black" id="date"></b><br> <!-- Current Date and Time:  </p> -->
+            <b style="color: black" id="time"></b>
+        </div>
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -52,6 +85,7 @@
     <script src="myStatic/js/node_modules/jquery/dist/jquery.js"></script>
     <script src="myStatic/js/jQuery.js"></script>
     <script src="myStatic/js/myJQueryScripts.js"></script>
+    <script src="myStatic/js/datetimescript.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

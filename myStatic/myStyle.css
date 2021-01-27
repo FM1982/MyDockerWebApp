@@ -26,9 +26,26 @@ body{
 footer{
     background-color: aquamarine;
     position: absolute;
-    bottom: 0;
     height: 171px;
-    color: brown;
+    bottom: 0px;
+/*    color: brown;*/
+}
+
+.myfooter{
+    background-color: aquamarine;
+    position: relative;
+    height: 45px;
+/*    color: brown;*/
+}
+
+.myfooter:before{
+    content: "";
+    background-color: aquamarine;
+    position: absolute;
+    height: 45px;
+    bottom: 0px;
+    z-index: -1;
+/*    color: brown;*/
 }
 
 h2{
